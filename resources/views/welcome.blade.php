@@ -11,5 +11,4 @@
                 content.</p>
         </div>
     </div>
-
 @endsection

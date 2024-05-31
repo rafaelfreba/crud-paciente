@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\County;
 use Illuminate\Http\Request;
 
 class CountyController extends Controller
@@ -9,9 +10,11 @@ class CountyController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(County $counties)
     {
-        echo 'cheguei no município!';
+        return view('counties.index', [
+            'counties' => $counties->paginate(10)
+        ]);
     }
 
     /**

@@ -2,27 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Patient;
 use Illuminate\Http\Request;
+use App\Http\Requests\PatientRequest;
 
 class PatientController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //TODO buscar os dados no bd
-        $patients = [
-            'cpf' => '9089890809',
-            'cns' => '867676867',
-            'name' => 'fulano de tal',
-            'birth' => '01/01/2000',
-            'email' => 'teste@gmail.com',
-            'phone' => '8979878998',
-            'county_id' => '1'
-        ];
+        $patients = Patient::with('county');
 
-        return view('patients.index', ['patients' => collect($patients)]);
+        $request->filled('id') ? $patients->findOrFail($request->id) : '';
+
+        return view('patients.index', [
+            'patients' => $patients->paginate(10)
+        ]);
     }
 
     /**
@@ -30,15 +27,17 @@ class PatientController extends Controller
      */
     public function create()
     {
-        //
+        return view('patients.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(PatientRequest $request)
     {
-        //
+        $patient = Patient::create($request->safe()->all());
+
+        return redirect()->route('patients.index', ['id' => $patient->id])->withSuccess('Paciente cadastrado com sucesso!');
     }
 
     /**

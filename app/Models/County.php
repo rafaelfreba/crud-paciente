@@ -14,4 +14,9 @@ class County extends Model
         'name',
         'fu'
     ];
+
+    public function patients()
+    {
+        return $this->hasMany(Patient::class);
+    }
 }
