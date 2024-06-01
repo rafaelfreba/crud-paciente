@@ -3,13 +3,13 @@
 @section('title', 'Lista de Pacientes')
 
 @section('content')
-    <div class="card mt-5">
+    <div class="card mt-5 table-responsive">
         <div class="card-body">
             <h5 class="card-title">Lista de Pacientes</h5>
             <table class="table">
                 <thead>
                     <tr>
-                        <th scope="col">ID</th>
+                        <th scope="col">#</th>
                         <th scope="col">CPF</th>
                         <th scope="col">CNS</th>
                         <th scope="col">NOME</th>
@@ -23,7 +23,7 @@
                 <tbody>
                     @forelse ($patients as $patient)
                         <tr>
-                            <th scope="row">{{ $patient->id }}</th>
+                            <th scope="row">{{ $loop->iteration }}</th>
                             <td>{{ $patient->cpf }}</td>
                             <td>{{ $patient->cns }}</td>
                             <td>{{ $patient->name }}</td>
@@ -32,8 +32,12 @@
                             <td>{{ $patient->phone }}</td>
                             <td>{{ "{$patient->county->name}/{$patient->county->fu}" }}</td>
                             <td>
-                                <a href="#" class="btn btn-warning"><i class="fas fa-edit"></i></a>
-                                <a href="#" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
+                                <a href="{{ route('patients.edit', $patient) }}" class="btn btn-warning"><i class="fas fa-edit"></i></a>
+                                <form action="{{ route('patients.destroy', $patient) }}" method="POST" @style('display: inline-block')>
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja apagar?')"><i class="fas fa-trash-alt"></i></button>
+                                </form>
                             </td>
                         </tr>
                     @empty
@@ -51,3 +55,4 @@
         </div>
     </div>
 @endsection
+

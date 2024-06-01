@@ -22,13 +22,22 @@ class PatientRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'cpf' => ['required', 'string', 'min:11', 'max:11'],
-            'cns' => ['required', 'string', 'min:15', 'max:15'],
+            'cpf' => ['required', 'string', 'cpf'],
+            'cns' => ['required', 'string', 'cns'],
             'name' => ['required', 'string', 'max:255'],
             'birth' => ['required'],
             'email' => ['required', 'email'],
-            'phone' => ['required', 'max:11'],
+            'phone' => ['required', 'celular_com_ddd'],
             'county_id' => ['required', 'numeric', 'between:1,142']
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        return $this->merge([
+            'cpf' => str_replace(['.', '-'], '', $this->cpf),
+            'cns' => str_replace(['.'], '', $this->cns),
+            'phone' => str_replace(['-',')','(',' '], '', $this->phone),
+        ]);
     }
 }
