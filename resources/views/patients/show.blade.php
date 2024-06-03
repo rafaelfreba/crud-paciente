@@ -7,6 +7,9 @@
         <div class="card-body">
             <h4>Detalhes do Paciente {{ $patient->name }}</h4>
             <ul class="list-group">
+                <li class="list-group-item">
+                    <img src="{{ asset($patient->avatar) }}" alt="foto_do_paciente"/>
+                </li>
                 <li class="list-group-item">ID: {{ $patient->id }}</li>
                 <li class="list-group-item">CPF: {{ $patient->cpf }}</li>
                 <li class="list-group-item">CNS: {{ $patient->cns }}</li>

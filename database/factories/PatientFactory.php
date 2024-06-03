@@ -23,7 +23,8 @@ class PatientFactory extends Factory
             'birth' => fake()->date('Y_m_d'),
             'email' => fake()->unique()->safeEmail(),
             'phone' => fake()->randomNumber(6) . fake()->randomNumber(5),
-            'county_id' => fake()->randomNumber(1,142)
+            'county_id' => fake()->randomNumber(1,142),
+            'avatar' => 'images/' . fake()->randomnumber(1,9) .'.png',
         ];
     }
 }
