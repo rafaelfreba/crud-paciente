@@ -8,7 +8,7 @@
             <h4>Detalhes do Paciente {{ $patient->name }}</h4>
             <ul class="list-group">
                 <li class="list-group-item">
-                    <img src="{{ asset($patient->avatar) }}" alt="foto_do_paciente"/>
+                    <img src="{{ asset($patient->avatar) }}" alt="foto_do_paciente" class="border rounded-circle" @style('width: 80px; height: 80px')/>
                 </li>
                 <li class="list-group-item">ID: {{ $patient->id }}</li>
                 <li class="list-group-item">CPF: {{ $patient->cpf }}</li>
