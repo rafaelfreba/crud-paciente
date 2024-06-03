@@ -22,12 +22,12 @@ class PatientRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'cpf' => ['required', 'string', 'cpf'],
-            'cns' => ['required', 'string', 'cns'],
+            'cpf' => ['required', 'string', 'min:11', 'max:11'],
+            'cns' => ['required', 'string', 'min:15', 'max:15'],
             'name' => ['required', 'string', 'max:255'],
             'birth' => ['required'],
             'email' => ['required', 'email'],
-            'phone' => ['required', 'celular_com_ddd'],
+            'phone' => ['required'],
             'county_id' => ['required', 'numeric', 'between:1,142']
         ];
     }
