@@ -14,6 +14,8 @@
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <header>
@@ -38,9 +40,10 @@
                             <a class="nav-link" href="{{ route('counties.index') }}">Municípios</a>
                         </li>
                     </ul>
-                    <form class="d-flex" role="search">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    <form action="{{ request()->route()->uri }}" method="GET" class="d-flex" role="search">
+                        @csrf
+                        <input class="form-control me-2" name="search" type="search" placeholder="Pesquisar" aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit"><i class="fas fa-search"></i></button>
                     </form>
                 </div>
             </div>
@@ -50,7 +53,6 @@
 
 
 <body>
-
 
     <div class="container-fluid">
         <div class="row">
@@ -78,6 +80,7 @@
         });
     </script>
 
+    @yield('js')
 
 </body>
 

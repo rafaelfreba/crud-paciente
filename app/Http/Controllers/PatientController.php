@@ -15,10 +15,27 @@ class PatientController extends Controller
     {
         $patients = Patient::with('county');
 
+        if($request->filled('search'))
+        {
+            $patients->where('cpf', $request->search)
+                     ->orWhere('cns', $request->search)
+                     ->orWhere('name', 'like', '%' . $request->search . '%')
+                     ->orWhere('birth', $request->search)
+                     ->orWhere('email', $request->search)
+                     ->orWhere('phone', $request->search)
+                     ->orWhereHas('county', function($query) use ($request){
+                        $query->where('name', 'like', '%' . $request->search . '%');
+                     });
+        }
+
         $request->filled('id') ? $patients->findOrFail($request->id) : '';
 
+        // $title = 'Apagar Paciente!';
+        // $text = "Deseja realmente apagar esse paciente?";
+        // confirmDelete($title, $text);
+
         return view('patients.index', [
-            'patients' => $patients->paginate(10)
+            'patients' => $patients->paginate(10)->withQueryString()
         ]);
     }
 
