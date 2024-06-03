@@ -40,6 +40,7 @@
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
                                 </form>
+                                <a href="{{ route('patients.show', $patient) }}" class="btn btn-primary"><i class="fas fa-eye"></i></a>
                             </td>
                         </tr>
                     @empty
