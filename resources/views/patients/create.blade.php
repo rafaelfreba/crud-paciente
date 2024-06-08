@@ -32,7 +32,7 @@
                         <input type="text" name="phone" id="phone" class="form-control phone" value="{{ old('phone') }}" placeholder="TELEFONE">
                     </div>
                     <div class="form-group col-4 my-1">
-                        <select name="county_id" class="form-control">
+                        <select name="county_id" class="form-select">
                             <option selected></option>
                             @foreach ($resource->getCounties() as $county)
                                 <option value="{{ $county->id }}" @selected(old('county_id') == $county->id)>{{ $county->name . '/' . $county->fu }}</option>

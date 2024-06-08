@@ -16,6 +16,19 @@ class PatientController extends Controller
     {
         $patients = Patient::with('county');
 
+        if($request->filled('search'))
+        {
+            $patients->where('cpf', $request->search)
+                     ->orWhere('cns', $request->search)
+                     ->orWhere('name', 'like', '%' . $request->search . '%')
+                     ->orWhere('birth', $request->search)
+                     ->orWhere('email', $request->search)
+                     ->orWhere('phone', $request->search)
+                     ->orWhereHas('county', function($query) use ($request){
+                        $query->where('name', 'like', '%' . $request->search . '%');
+                     });
+        }
+
         $request->filled('id') ? $patients->findOrFail($request->id) : '';
 
         //TODO temos que corrigir a pesquisa por data de nascimento
@@ -32,6 +45,7 @@ class PatientController extends Controller
             : '';
 
         return view('patients.index', [
+            'patients' => $patients->paginate(10)->withQueryString()
             'patients' => $patients->paginate(10)->withQueryString()
         ]);
     }
@@ -57,6 +71,7 @@ class PatientController extends Controller
     /**
      * Display the specified resource.
      */
+    public function show(Patient $patient)
     public function show(Patient $patient)
     {
         return view('patients.show', [
