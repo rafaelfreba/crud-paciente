@@ -9,7 +9,13 @@
         </div>
         <div class="card-body">
             <ul class="list-group">
-                <li class="list-group-item">Foto: <br/><img src="{{ asset($patient->foto)}}" alt="foto do paciente" /></li>
+                <li class="list-group-item">Foto: <br/>
+                    @if($patient->foto)
+                        <img src="{{ asset($patient->foto)}}" alt="foto do paciente" />
+                    @else 
+                        <span class="text-danger">Sem foto!</span>
+                    @endif
+                </li>
                 <li class="list-group-item">ID: {{ $patient->id }}</li>
                 <li class="list-group-item">CPF: {{ $patient->cpf }}</li>
                 <li class="list-group-item">CNS: {{ $patient->cns }}</li>
