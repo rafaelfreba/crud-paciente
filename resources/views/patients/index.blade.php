@@ -39,6 +39,7 @@
                                     <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
                                 </form>
                                 <a href="{{ route('patients.show', $patient) }}" class="btn btn-info"><i class="fas fa-eye"></i></a>
+                                <a href="{{ route('patients.pdf', $patient) }}" class="btn btn-dark" target="_blank"><i class="far fa-file-pdf"></i></a>
                             </td>
                         </tr>
                     @empty

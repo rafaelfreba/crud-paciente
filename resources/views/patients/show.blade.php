@@ -27,6 +27,7 @@
             </ul>
         </div>
         <div class="card-footer">
+            <a href="{{ route('patients.pdf', $patient) }}" class="btn btn-info" target="_blank">Exportar PDF</a>
             <a href="{{ route('patients.index') }}" class="btn btn-danger">Voltar</a>
         </div>
     </div>    

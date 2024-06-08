@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Patient;
 use Illuminate\Http\Request;
 use App\Http\Requests\PatientRequest;
+use Barryvdh\DomPDF\Facade\Pdf as Pdf;
 
 class PatientController extends Controller
 {
@@ -89,5 +90,12 @@ class PatientController extends Controller
         $patient->delete();
 
         return redirect('patients')->withSuccess('Paciente apagado com sucesso!');
+    }
+
+    public function pdf(Patient $patient)
+    {
+        $pdf = Pdf::loadView('patients.pdf', ['data' => $patient->load('county')]);
+
+        return $pdf->stream($patient->name . ".pdf");
     }
 }
