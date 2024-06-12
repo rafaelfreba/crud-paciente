@@ -22,7 +22,7 @@ class Patient extends Model
         'phone',
         'county_id'
     ];
-    
+
 
     protected function casts(): array
     {

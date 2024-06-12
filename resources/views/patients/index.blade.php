@@ -6,6 +6,7 @@
     <div class="card mt-5 table-responsive">
         <div class="card-body">
             <h5 class="card-title">Lista de Pacientes</h5>
+            <a href="{{ route('patients.export') }}" class="btn btn-primary float-end" target="__blank"><i class="fas fa-file-excel"></i> Exportar CSV</a>
             <table class="table">
                 <thead>
                     <tr>
@@ -36,7 +37,6 @@
                                 <form action="{{ route('patients.destroy', $patient) }}" method="POST" @style('display: inline-block') class="delete">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
                                     <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
                                 </form>
                                 <a href="{{ route('patients.show', $patient) }}" class="btn btn-info"><i class="fas fa-eye"></i></a>

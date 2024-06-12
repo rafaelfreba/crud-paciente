@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\PatientsExport;
 use App\Models\Patient;
 use Illuminate\Http\Request;
 use App\Http\Requests\PatientRequest;
 use Barryvdh\DomPDF\Facade\Pdf as Pdf;
+use Maatwebsite\Excel\Facades\Excel as Excel;
 
 class PatientController extends Controller
 {
@@ -31,21 +33,8 @@ class PatientController extends Controller
 
         $request->filled('id') ? $patients->findOrFail($request->id) : '';
 
-        //TODO temos que corrigir a pesquisa por data de nascimento
-        $request->filled('search') ?
-            $patients->where('name', 'like', '%' . $request->search . '%')
-            ->orWhere('cpf', $request->search)
-            ->orWhere('cns', $request->search)
-            ->orWhere('birth', $request->search)
-            ->orWhere('email', 'like', '%' . $request->search . '%')
-            ->orWhere('phone', $request->search)
-            ->orWhereHas('county', function($query) use ($request){
-                $query->where('name', 'like', '%' . $request->search . '%');
-            })
-            : '';
 
         return view('patients.index', [
-            'patients' => $patients->paginate(10)->withQueryString()
             'patients' => $patients->paginate(10)->withQueryString()
         ]);
     }
@@ -71,7 +60,6 @@ class PatientController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Patient $patient)
     public function show(Patient $patient)
     {
         return view('patients.show', [
@@ -112,5 +100,10 @@ class PatientController extends Controller
         $pdf = Pdf::loadView('patients.pdf', ['data' => $patient->load('county')]);
 
         return $pdf->stream($patient->name . ".pdf");
+    }
+
+    public function export()
+    {
+        return Excel::download(new PatientsExport, 'patients.xlsx');
     }
 }
