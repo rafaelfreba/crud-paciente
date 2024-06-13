@@ -20,7 +20,6 @@ return new class extends Migration
             $table->date('birth');
             $table->string('email');
             $table->string('phone', 11);
-            $table->string('avatar');
             $table->timestamps();
         });
     }

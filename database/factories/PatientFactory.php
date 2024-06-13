@@ -17,7 +17,7 @@ class PatientFactory extends Factory
     public function definition(): array
     {
         return [
-            'foto' => 'images/' . fake()->randomNumber(1,9) . '.png',
+            // 'foto' => fake()->randomNumber(1,9) . '.png',
             'cpf' => fake()->unique()->cpf(false),
             'cns' => fake()->unique()->rg(false) . fake()->randomNumber(6),
             'name' => fake()->name(),
@@ -25,7 +25,6 @@ class PatientFactory extends Factory
             'email' => fake()->unique()->safeEmail(),
             'phone' => fake()->randomNumber(6) . fake()->randomNumber(5),
             'county_id' => fake()->randomNumber(1,142),
-            'avatar' => 'images/' . fake()->randomnumber(1,9) .'.png',
         ];
     }
 }

@@ -10,6 +10,7 @@ Route::get('/', function () {
 
 Route::get('patients/pdf/{patient}', [PatientController::class, 'pdf'])->name('patients.pdf');
 
+Route::post('patients/upload', [Patientcontroller::class, 'upload'])->name('patients.upload');
 Route::get('patients/export/', [PatientController::class, 'export'])->name('patients.export');
 Route::resource('patients', PatientController::class);
 Route::resource('counties', CountyController::class);

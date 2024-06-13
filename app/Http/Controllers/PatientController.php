@@ -7,6 +7,7 @@ use App\Models\Patient;
 use Illuminate\Http\Request;
 use App\Http\Requests\PatientRequest;
 use Barryvdh\DomPDF\Facade\Pdf as Pdf;
+use Illuminate\Support\Facades\File;
 use Maatwebsite\Excel\Facades\Excel as Excel;
 
 class PatientController extends Controller
@@ -18,17 +19,16 @@ class PatientController extends Controller
     {
         $patients = Patient::with('county');
 
-        if($request->filled('search'))
-        {
+        if ($request->filled('search')) {
             $patients->where('cpf', $request->search)
-                     ->orWhere('cns', $request->search)
-                     ->orWhere('name', 'like', '%' . $request->search . '%')
-                     ->orWhere('birth', $request->search)
-                     ->orWhere('email', $request->search)
-                     ->orWhere('phone', $request->search)
-                     ->orWhereHas('county', function($query) use ($request){
-                        $query->where('name', 'like', '%' . $request->search . '%');
-                     });
+                ->orWhere('cns', $request->search)
+                ->orWhere('name', 'like', '%' . $request->search . '%')
+                ->orWhere('birth', $request->search)
+                ->orWhere('email', $request->search)
+                ->orWhere('phone', $request->search)
+                ->orWhereHas('county', function ($query) use ($request) {
+                    $query->where('name', 'like', '%' . $request->search . '%');
+                });
         }
 
         $request->filled('id') ? $patients->findOrFail($request->id) : '';
@@ -105,5 +105,35 @@ class PatientController extends Controller
     public function export()
     {
         return Excel::download(new PatientsExport, 'patients.xlsx');
+    }
+
+    public function upload(Request $request)
+    {
+        if ($request->hasfile('file')) {
+
+            $uploadPath = storage_path('app/public/fotos');
+
+            $file = $request->file('file');
+
+            $extention = $file->getClientOriginalExtension();
+            $filename = time() . '-' . rand(0, 99) . '.' . $extention;
+            $file->move($uploadPath, $filename);
+
+            $finalImageName = $uploadPath . $filename;
+
+            //buscando o paciente para atualizar a foto
+            $patient = Patient::where('id', $request->patient_id)->first();
+            //se existe foto apaga a antiga
+            if (File::exists(storage_path('app/public/fotos/' . $patient->foto))) {
+                File::delete(storage_path('app/public/fotos/' . $patient->foto));
+            }
+            //guarda a foto
+            $patient->foto = $filename;
+            $patient->update();
+
+            return response()->json(['success' => 'Foto salva com sucesso']);
+        }
+
+        return response()->json(['error' => 'Falha no upload do arquivo.']);
     }
 }
