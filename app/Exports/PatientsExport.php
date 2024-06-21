@@ -33,8 +33,20 @@ class PatientsExport implements FromCollection, WithHeadings, WithStyles
 
     public function collection()
     {
-        $patients = Patient::with('county')->get();
+        $patients = Patient::with('county');
+        
+        if (request()->filled('search')) {
+            $patients->where('cpf', request()->search)
+                ->orWhere('cns', request()->search)
+                ->orWhere('name', 'like', '%' . request()->search . '%')
+                ->orWhere('birth', request()->search)
+                ->orWhere('email', request()->search)
+                ->orWhere('phone', request()->search)
+                ->orWhereHas('county', function ($query) {
+                    $query->where('name', 'like', '%' . request()->search . '%');
+                });
+        }        
 
-        return new PatientCollection($patients);
+        return new PatientCollection($patients->get());
     }
 }

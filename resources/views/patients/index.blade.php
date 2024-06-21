@@ -6,7 +6,7 @@
     <div class="card mt-5 table-responsive">
         <div class="card-body">
             <h5 class="card-title">Lista de Pacientes</h5>
-            <a href="{{ route('patients.export') }}" class="btn btn-primary float-end" target="__blank"><i class="fas fa-file-excel"></i> Exportar CSV</a>
+            <a href="{{ route('patients.export', request()->getQueryString()) }}" class="btn btn-primary float-end" target="__blank"><i class="fas fa-file-excel"></i> Exportar CSV</a>
             <table class="table">
                 <thead>
                     <tr>
