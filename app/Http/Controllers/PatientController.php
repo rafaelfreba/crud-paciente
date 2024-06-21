@@ -119,8 +119,6 @@ class PatientController extends Controller
             $filename = time() . '-' . rand(0, 99) . '.' . $extention;
             $file->move($uploadPath, $filename);
 
-            $finalImageName = $uploadPath . $filename;
-
             //buscando o paciente para atualizar a foto
             $patient = Patient::where('id', $request->patient_id)->first();
             //se existe foto apaga a antiga
