@@ -96,7 +96,7 @@ class PatientController extends Controller
     }
 
     public function pdf(Patient $patient)
-    {
+    {        
         $pdf = Pdf::loadView('patients.pdf', ['data' => $patient->load('county')]);
 
         return $pdf->stream($patient->name . ".pdf");
@@ -111,7 +111,7 @@ class PatientController extends Controller
     {
         if ($request->hasfile('file')) {
 
-            $uploadPath = storage_path('app/public/fotos');
+            $uploadPath = storage_path('app/public');
 
             $file = $request->file('file');
 
@@ -124,8 +124,8 @@ class PatientController extends Controller
             //buscando o paciente para atualizar a foto
             $patient = Patient::where('id', $request->patient_id)->first();
             //se existe foto apaga a antiga
-            if (File::exists(storage_path('app/public/fotos/' . $patient->foto))) {
-                File::delete(storage_path('app/public/fotos/' . $patient->foto));
+            if (File::exists(storage_path('app/public/' . $patient->foto))) {
+                File::delete(storage_path('app/public/' . $patient->foto));
             }
             //guarda a foto
             $patient->foto = $filename;

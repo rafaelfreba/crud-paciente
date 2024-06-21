@@ -11,7 +11,7 @@
             <ul class="list-group">
                 <li class="list-group-item">Foto: <br/>
                     @if($patient->foto)
-                        <img src="{{ asset('storage/fotos') . '/' . $patient->foto}}" alt="foto do paciente"  class="rounded-circle" @style('width: 200px; height: 200px')/>
+                        <img src="{{ asset('storage') . '/' . $patient->foto}}" alt="foto do paciente"  class="rounded-circle" @style('width: 200px; height: 200px')/>
                     @else
                         <img src="{{ asset('images/' . mt_rand(1,9) . '.png') }}" alt="avatar do paciente" class="rounded-circle"  @style('width: 200px; height: 200px')/>
                     @endif
