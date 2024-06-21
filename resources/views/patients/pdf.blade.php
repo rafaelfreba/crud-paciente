@@ -14,13 +14,8 @@
         <li>ID: {{ $data->id }}</li>
         <li>FOTO:
             <br />
-            @if ($data->foto)
-                <img src="data:image/jpg;base64,{{ base64_encode(file_get_contents(public_path('storage') . '/' . $data->foto)) }}"
-                    @style('width: 200px; height: 200px; border: 1px solid black; border-radius: 50%') />
-            @else
-                <img src="data:image/jpg;base64,{{ base64_encode(file_get_contents(public_path('images') . '/' . mt_rand(1,9) . '.png')) }}"
-                    @style('width: 200px; height: 200px; border: 1px solid black; border-radius: 50%') />
-            @endif
+            <img src="data:image/jpg;base64,{{ isset($data->foto) ? getFoto($data->foto) : getFoto() }}"
+                @style('width: 200px; height: 200px; border: 1px solid black; border-radius: 50%') />
         </li>
         <li>CPF: {{ $data->cpf }}</li>
         <li>CNS: {{ $data->cns }}</li>
