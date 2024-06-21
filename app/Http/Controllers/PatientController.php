@@ -35,7 +35,7 @@ class PatientController extends Controller
 
 
         return view('patients.index', [
-            'patients' => $patients->paginate(10)->withQueryString()
+            'patients' => $patients->paginate(5)->withQueryString()
         ]);
     }
 
