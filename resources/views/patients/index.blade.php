@@ -4,9 +4,16 @@
 
 @section('content')
     <div class="card mt-5 table-responsive">
-        <div class="card-body">
+        <div class="card-header">
             <h5 class="card-title">Lista de Pacientes</h5>
-            <a href="{{ route('patients.export', request()->getQueryString()) }}" class="btn btn-primary float-end" target="__blank"><i class="fas fa-file-excel"></i> Exportar CSV</a>
+            <div class="float-end">
+                <a href="{{ route('patients.export', request()->getQueryString()) }}" class="btn btn-primary"
+                    target="__blank"><i class="fas fa-file-excel"></i> Exportar CSV</a>
+                <a href="{{ route('patients.chartBirth') }}" class="btn btn-secondary"><i class="fas fa-chart-line"></i>
+                    Gráfico</a>
+            </div>
+        </div>
+        <div class="card-body">
             <table class="table">
                 <thead>
                     <tr>
@@ -33,14 +40,18 @@
                             <td>{{ $patient->phone }}</td>
                             <td>{{ "{$patient->county->name}/{$patient->county->fu}" }}</td>
                             <td>
-                                <a href="{{ route('patients.edit', $patient) }}" class="btn btn-warning"><i class="fas fa-edit"></i></a>
-                                <form action="{{ route('patients.destroy', $patient) }}" method="POST" @style('display: inline-block') class="delete">
+                                <a href="{{ route('patients.edit', $patient) }}" class="btn btn-warning"><i
+                                        class="fas fa-edit"></i></a>
+                                <form action="{{ route('patients.destroy', $patient) }}" method="POST" @style('display: inline-block')
+                                    class="delete">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
                                 </form>
-                                <a href="{{ route('patients.show', $patient) }}" class="btn btn-info"><i class="fas fa-eye"></i></a>
-                                <a href="{{ route('patients.pdf', $patient) }}" class="btn btn-dark" target="_blank"><i class="far fa-file-pdf"></i></a>
+                                <a href="{{ route('patients.show', $patient) }}" class="btn btn-info"><i
+                                        class="fas fa-eye"></i></a>
+                                <a href="{{ route('patients.pdf', $patient) }}" class="btn btn-dark" target="_blank"><i
+                                        class="far fa-file-pdf"></i></a>
                             </td>
                         </tr>
                     @empty
@@ -80,4 +91,3 @@
         })
     </script>
 @endsection
-
