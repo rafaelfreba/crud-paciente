@@ -6,11 +6,15 @@
     <div class="card mt-5 table-responsive">
         <div class="card-header">
             <h5 class="card-title">Lista de Pacientes</h5>
+
             <div class="float-end">
-                <a href="{{ route('patients.export', request()->getQueryString()) }}" class="btn btn-primary"
-                    target="__blank"><i class="fas fa-file-excel"></i> Exportar CSV</a>
-                <a href="{{ route('patients.chartBirth') }}" class="btn btn-secondary"><i class="fas fa-chart-line"></i>
-                    Gráfico</a>
+                <a href="{{ route('patients.export') }}" class="btn btn-success animate__animated animate__flip"
+                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Exportar para Excel"><i
+                        class="fas fa-file-excel"></i></a>
+
+                <a href="{{ route('patients.chart') }}" class="btn btn-info animate__animated animate__flip"
+                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Gráficos de Pacientes"><i
+                        class="fas fa-chart-bar"></i></a>
             </div>
         </div>
         <div class="card-body">

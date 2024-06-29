@@ -38,4 +38,19 @@ class Patient extends Model
     {
         return $this->belongsTo(County::class);
     }
+
+    public function getPatientsBirth2000()
+    {
+        $dates = ['2000-01-01'];
+
+        return collect($dates)->map(function ($date) {
+            $after2k = self::where('birth', '>=', $date)->count();
+            $before2k = self::where('birth', '<', $date)->count();
+
+            return [
+                'Antes 2000' => $after2k,
+                'Depois 2000' => $before2k,
+            ];
+        })->first();
+    }
 }

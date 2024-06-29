@@ -2,16 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\DataObjects\ChartData;
 use App\Exports\PatientsExport;
 use App\Models\Patient;
 use Illuminate\Http\Request;
 use App\Http\Requests\PatientRequest;
+use App\Http\Traits\Chart;
 use Barryvdh\DomPDF\Facade\Pdf as Pdf;
 use Illuminate\Support\Facades\File;
 use Maatwebsite\Excel\Facades\Excel as Excel;
 
 class PatientController extends Controller
 {
+    use Chart;
+
     /**
      * Display a listing of the resource.
      */
@@ -96,7 +100,7 @@ class PatientController extends Controller
     }
 
     public function pdf(Patient $patient)
-    {        
+    {
         $pdf = Pdf::loadView('patients.pdf', ['data' => $patient->load('county')]);
 
         return $pdf->stream($patient->name . ".pdf");
@@ -105,6 +109,15 @@ class PatientController extends Controller
     public function export()
     {
         return Excel::download(new PatientsExport, 'patients.xlsx');
+    }
+
+    public function chart(Patient $patients)
+    {
+        $chartData = new ChartData('patients', 'bar', $patients->getPatientsBirth2000(), 'Pacientes nascidos antes e depois de 2000');
+
+        $chart = self::getChart($chartData);
+
+        return view("patients.chart", compact("chart"));
     }
 
     public function upload(Request $request)
