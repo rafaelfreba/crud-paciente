@@ -26,6 +26,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/i18n/pt-BR.min.js"
         integrity="sha512-H1yBoUnrE7X+NeWpeZvBuy2RvrbvLEAEjX/Mu8L2ggUBja62g1z49fAboGidE5YEQyIVMCWJC9krY4/KEqkgag=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    {{-- AnimatedCss --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 </head>
 
 <header>
@@ -80,6 +82,10 @@
     </script>
 
     <script>
+        //ativar tooltips
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+        
         $(document).ready(function() {
             $('.phone').mask('(00)00000-0000');
             $('.cpf').mask('000.000.000-00', {
